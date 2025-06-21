@@ -1,0 +1,39 @@
+[{
+  "_id": {
+    "$oid": "685325290e1cb8d4fa785ad0"
+  },
+  "name": "Ibnu Malik Mudzopar",
+  "email": "ibnumalikmudzopar@gmail.com",
+  "password": "$2b$10$p8gbZLAUmDRNnsMlod2Mm.O6N22CKpOhMpSM0YcGWCa0vtllbKOcC",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6854fb90e65a35bbc910aa32"
+  },
+  "name": "Admin RS",
+  "email": "admin@example.com",
+  "password": "$2b$10$kLSMIduyDMaHHvNHtasQA.KV13bRpI8HHtIju5B9PlUiOdlDhw8mK",
+  "role": "admin",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6855289f6df636ab57440b17"
+  },
+  "name": "Dr. Rizky",
+  "email": "dokter@example.com",
+  "password": "$2b$10$OUwRL0eRrKRypOJcklNV3uVzf6iKX7RbeinFc7u0CvUXTwcWdooHi",
+  "role": "dokter",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68552c5b6df636ab57440b49"
+  },
+  "name": "pasien",
+  "email": "pasien@example.com",
+  "password": "$2b$10$diocMSzxHGfYj8I1Swu5yOkWRorYt5TfLKvJNZJfL6x68cHBBH9Ti",
+  "role": "pasien",
+  "__v": 0
+}]

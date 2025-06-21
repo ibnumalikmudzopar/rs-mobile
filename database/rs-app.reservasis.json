@@ -1,0 +1,138 @@
+[{
+  "_id": {
+    "$oid": "685400f4280f548f70d3cf52"
+  },
+  "pasienId": {
+    "$oid": "685325290e1cb8d4fa785ad0"
+  },
+  "namaPasien": "Ibnu Malik Mudzopar",
+  "dokter": "dr. Abdi",
+  "tanggal": "2000-12-02",
+  "keluhan": "Sakit Gigi Bengkak",
+  "status": "Selesai Diperiksa",
+  "createdAt": {
+    "$date": "2025-06-19T12:22:12.369Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-20T09:35:15.331Z"
+  },
+  "__v": 0,
+  "catatan": "",
+  "diagnosa": "",
+  "tindakan": ""
+},
+{
+  "_id": {
+    "$oid": "6854299925b7da0e5ba5f3e4"
+  },
+  "pasienId": {
+    "$oid": "685325290e1cb8d4fa785ad0"
+  },
+  "namaPasien": "Ibnu Malik Mudzopar",
+  "dokter": "dr. Ubi",
+  "tanggal": "2025-02-03",
+  "keluhan": "Sakit Kepala",
+  "status": "Selesai Diperiksa",
+  "createdAt": {
+    "$date": "2025-06-19T15:15:37.701Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-20T09:35:25.739Z"
+  },
+  "__v": 0,
+  "catatan": "",
+  "diagnosa": "",
+  "tindakan": ""
+},
+{
+  "_id": {
+    "$oid": "685535fad3682f5a1c82865b"
+  },
+  "pasienId": {
+    "$oid": "68552c5b6df636ab57440b49"
+  },
+  "namaPasien": "pasien",
+  "dokter": "dr. Rudi Hartono",
+  "tanggal": "2025-06-06",
+  "keluhan": "Sakit Kepala",
+  "status": "Menunggu Konfirmasi",
+  "diagnosa": "",
+  "tindakan": "",
+  "catatan": "",
+  "createdAt": {
+    "$date": "2025-06-20T10:20:42.061Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-20T10:20:42.061Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68553775d3682f5a1c828665"
+  },
+  "pasienId": {
+    "$oid": "68552c5b6df636ab57440b49"
+  },
+  "namaPasien": "pasien",
+  "dokter": "dr. Maya Rahayu",
+  "tanggal": "2025-06-21",
+  "keluhan": "Sakit Nyut Nyut an di Perut",
+  "status": "Terkonfirmasi",
+  "diagnosa": "",
+  "tindakan": "",
+  "catatan": "",
+  "createdAt": {
+    "$date": "2025-06-20T10:27:01.265Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-20T10:53:42.020Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685538bad3682f5a1c828669"
+  },
+  "pasienId": {
+    "$oid": "68552c5b6df636ab57440b49"
+  },
+  "namaPasien": "pasien",
+  "dokter": "dr. Andi Setiawan",
+  "tanggal": "2025-06-01",
+  "keluhan": "Anak Pusing Pusing",
+  "status": "Selesai Diperiksa",
+  "diagnosa": "",
+  "tindakan": "",
+  "catatan": "",
+  "createdAt": {
+    "$date": "2025-06-20T10:32:26.929Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-20T10:38:27.767Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68557eda7379f0612f9c7409"
+  },
+  "pasienId": {
+    "$oid": "68552c5b6df636ab57440b49"
+  },
+  "namaPasien": "pasien",
+  "dokter": "dr. Brian",
+  "tanggal": "2026-06-20",
+  "keluhan": "Sakit Gusi Nyut Nyutan ",
+  "status": "Selesai Diperiksa",
+  "diagnosa": "",
+  "tindakan": "",
+  "catatan": "",
+  "createdAt": {
+    "$date": "2025-06-20T15:31:38.279Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-20T15:35:24.097Z"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,48 @@
+[{
+  "_id": {
+    "$oid": "68553a23d3682f5a1c82867a"
+  },
+  "reservasiId": {
+    "$oid": "685538bad3682f5a1c828669"
+  },
+  "pasienId": {
+    "$oid": "68552c5b6df636ab57440b49"
+  },
+  "namaPasien": "pasien",
+  "dokter": "dr. Andi Setiawan",
+  "tanggal": "2025-06-01",
+  "diagnosa": "Anak sakit kepala demam",
+  "tindakan": "Memberikan obat demam",
+  "catatan": "kalau sudah sembuh obatnya jangan diminum lagi",
+  "createdAt": {
+    "$date": "2025-06-20T10:38:27.730Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-20T10:38:27.730Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68557fbc7379f0612f9c7425"
+  },
+  "reservasiId": {
+    "$oid": "68557eda7379f0612f9c7409"
+  },
+  "pasienId": {
+    "$oid": "68552c5b6df636ab57440b49"
+  },
+  "namaPasien": "pasien",
+  "dokter": "dr. Brian",
+  "tanggal": "2026-06-20",
+  "diagnosa": "Gusi belakang harus di cabut",
+  "tindakan": "cabut gigi gusi belakang sebelah kanan",
+  "catatan": "jangan kebanyakan makan permen yahh dek :) ",
+  "createdAt": {
+    "$date": "2025-06-20T15:35:24.074Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-20T15:35:24.074Z"
+  },
+  "__v": 0
+}]
