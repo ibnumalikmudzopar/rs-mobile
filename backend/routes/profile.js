@@ -1,19 +1,23 @@
 const express = require('express');
 const router = express.Router();
+
 const User = require('../models/user');
 const verifyToken = require('../middleware/verifyToken');
 
-// GET: Ambil data profile dari token
+// 📍 GET /api/profile
+// Ambil data profil berdasarkan token login
 router.get('/', verifyToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select('-password'); // tanpa password
     res.json(user);
   } catch (err) {
+    console.error('Gagal ambil profil:', err);
     res.status(500).json({ msg: 'Gagal mengambil profil' });
   }
 });
 
-// PUT: Update data profile
+// 📍 PUT /api/profile
+// Update nama dan email user
 router.put('/', verifyToken, async (req, res) => {
   try {
     const { name, email } = req.body;
@@ -26,6 +30,7 @@ router.put('/', verifyToken, async (req, res) => {
 
     res.json({ msg: 'Profil berhasil diperbarui', data: updatedUser });
   } catch (err) {
+    console.error('Gagal update profil:', err);
     res.status(500).json({ msg: 'Gagal memperbarui profil' });
   }
 });

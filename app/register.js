@@ -1,7 +1,16 @@
+// Halaman Registrasi Akun Pasien
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Alert,
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { BASE_URL } from '../constants';
+
 export default function RegisterPage() {
   const [form, setForm] = useState({
     name: '',
@@ -11,18 +20,17 @@ export default function RegisterPage() {
 
   const router = useRouter();
 
+  // Fungsi menangani input field
   const handleChange = (field, value) => {
     setForm({ ...form, [field]: value });
   };
 
+  // Fungsi untuk mengirim data registrasi
   const handleRegister = async () => {
     try {
-      // const response = await fetch('http://localhost:5000/api/auth/register', {  // API endpoint untuk registrasi   
-      const response = await fetch(`${BASE_URL}/api/auth/register`, { // IP Laptop
+      const response = await fetch(`${BASE_URL}/api/auth/register`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
 
@@ -30,7 +38,7 @@ export default function RegisterPage() {
 
       if (response.ok) {
         Alert.alert('Sukses', 'Registrasi berhasil!');
-        router.replace('/login'); 
+        router.replace('/login');
       } else {
         Alert.alert('Gagal', data.message || 'Terjadi kesalahan.');
       }
@@ -57,6 +65,7 @@ export default function RegisterPage() {
         value={form.email}
         onChangeText={(text) => handleChange('email', text)}
         keyboardType="email-address"
+        autoCapitalize="none"
       />
 
       <TextInput
@@ -69,7 +78,7 @@ export default function RegisterPage() {
 
       <Button title="Daftar" onPress={handleRegister} />
 
-      {/* Teks navigasi ke login */}
+      {/* Navigasi ke halaman login */}
       <Text
         style={styles.linkText}
         onPress={() => router.push('/login')}

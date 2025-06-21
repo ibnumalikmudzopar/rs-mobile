@@ -1,3 +1,4 @@
+// Halaman Login Akun Pasien
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -9,11 +10,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { BASE_URL } from '../constants';
-const LoginScreen = ({ navigation }) => {
+
+import { BASE_URL } from '../constants'; // URL backend
+
+const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // Fungsi login
   const handleLogin = async () => {
     try {
       const res = await fetch(`${BASE_URL}/api/auth/login`, {
@@ -24,25 +28,23 @@ const LoginScreen = ({ navigation }) => {
 
       const data = await res.json();
 
+      // Jika gagal login
       if (!res.ok) {
         Alert.alert('Gagal Login', data.msg || 'Terjadi kesalahan');
         return;
       }
 
+      // Validasi: hanya role 'pasien' yang boleh login
       if (data.user.role !== 'pasien') {
         Alert.alert('Ditolak', 'Anda bukan pasien');
         return;
       }
-      router.replace('/login');
 
-
-      // ✅ Simpan token ke penyimpanan lokal
+      // Simpan token JWT
       await AsyncStorage.setItem('token', data.token);
 
       Alert.alert('Sukses', 'Login berhasil!');
-      
-      // ✅ Arahkan ke halaman Home
-      router.replace('/home');
+      router.replace('/home'); // Arahkan ke halaman utama
     } catch (err) {
       console.error(err);
       Alert.alert('Error', 'Gagal terhubung ke server');
@@ -52,13 +54,16 @@ const LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login Akun Pasien</Text>
+
       <TextInput
         placeholder="Email"
         style={styles.input}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
+        autoCapitalize="none"
       />
+
       <TextInput
         placeholder="Password"
         style={styles.input}
@@ -66,29 +71,23 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={setPassword}
         secureTextEntry
       />
+
       <TouchableOpacity onPress={handleLogin} style={styles.button}>
         <Text style={styles.buttonText}>MASUK</Text>
       </TouchableOpacity>
 
+      {/* Navigasi ke register dan login lainnya */}
       <TouchableOpacity onPress={() => router.push('/register')}>
-        <Text style={{ marginTop: 15, color: '#2196f3', textAlign: 'center' }}>
-          Belum punya akun? Daftar di sini
-        </Text>
+        <Text style={styles.link}>Belum punya akun? Daftar di sini</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => router.push('/adminlogin')}>
-        <Text style={{ marginTop: 10, color: '#2196f3', textAlign: 'center' }}>
-          Login sebagai Admin
-        </Text>
+        <Text style={styles.link}>Login sebagai Admin</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => router.push('/dokterlogin')}>
-        <Text style={{ marginTop: 10, color: '#2196f3', textAlign: 'center' }}>
-          Login sebagai Dokter
-        </Text>
+        <Text style={styles.link}>Login sebagai Dokter</Text>
       </TouchableOpacity>
-
-
     </View>
   );
 };
@@ -125,5 +124,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
+  link: {
+    marginTop: 10,
+    color: '#2196f3',
+    textAlign: 'center',
+  },
 });
-

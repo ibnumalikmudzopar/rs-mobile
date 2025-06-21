@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// Dummy data jadwal dokter
+// 📌 Data statis jadwal dokter
 const jadwalDokter = [
   {
     id: 1,
@@ -26,7 +26,8 @@ const jadwalDokter = [
   },
 ];
 
-// GET /api/jadwal
+// 📍 GET /api/jadwal
+// Endpoint publik untuk ambil daftar jadwal dokter
 router.get('/', (req, res) => {
   res.json(jadwalDokter);
 });

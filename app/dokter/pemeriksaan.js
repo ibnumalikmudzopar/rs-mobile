@@ -1,29 +1,38 @@
+// Dokter: Halaman Pemeriksaan Pasien
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
-  ActivityIndicator, Alert, Button,
-  ScrollView, StyleSheet, Text,
-  TextInput
+  ActivityIndicator,
+  Alert,
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
 } from 'react-native';
-import { BASE_URL } from '../../constants'; // Pastikan path ini sesuai dengan struktur proyek Anda
+
+import { BASE_URL } from '../../constants';
 
 export default function PemeriksaanScreen() {
   const { id } = useLocalSearchParams(); // ID reservasi
   const router = useRouter();
 
+  // State data
   const [loading, setLoading] = useState(true);
   const [reservasi, setReservasi] = useState(null);
   const [diagnosa, setDiagnosa] = useState('');
   const [tindakan, setTindakan] = useState('');
   const [catatan, setCatatan] = useState('');
 
+  // Ambil data reservasi berdasarkan ID
   const fetchReservasi = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
       const res = await fetch(`${BASE_URL}/api/reservasi/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       const json = await res.json();
       if (res.ok) {
         setReservasi(json);
@@ -37,6 +46,7 @@ export default function PemeriksaanScreen() {
     }
   };
 
+  // Simpan hasil pemeriksaan ke backend
   const handleSimpan = async () => {
     if (!diagnosa || !tindakan || !catatan) {
       Alert.alert('Lengkapi data', 'Semua field harus diisi');
@@ -45,7 +55,7 @@ export default function PemeriksaanScreen() {
 
     try {
       const token = await AsyncStorage.getItem('token');
-      const res = await fetch(`http://50.50.50.110:5000/api/riwayatkunjungan/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/riwayatkunjungan/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,20 +82,30 @@ export default function PemeriksaanScreen() {
   }, []);
 
   if (loading) return <ActivityIndicator style={{ marginTop: 50 }} />;
-
   if (!reservasi) return null;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Pemeriksaan Pasien</Text>
+
       <Text>Nama Pasien: {reservasi.namaPasien}</Text>
       <Text>Keluhan: {reservasi.keluhan}</Text>
 
       <Text style={styles.label}>Diagnosa</Text>
-      <TextInput style={styles.input} value={diagnosa} onChangeText={setDiagnosa} placeholder="Masukkan diagnosa" />
+      <TextInput
+        style={styles.input}
+        value={diagnosa}
+        onChangeText={setDiagnosa}
+        placeholder="Masukkan diagnosa"
+      />
 
       <Text style={styles.label}>Tindakan</Text>
-      <TextInput style={styles.input} value={tindakan} onChangeText={setTindakan} placeholder="Masukkan tindakan" />
+      <TextInput
+        style={styles.input}
+        value={tindakan}
+        onChangeText={setTindakan}
+        placeholder="Masukkan tindakan"
+      />
 
       <Text style={styles.label}>Catatan</Text>
       <TextInput
@@ -107,7 +127,9 @@ const styles = StyleSheet.create({
   title: { fontSize: 20, fontWeight: 'bold', marginBottom: 20 },
   label: { marginTop: 15, marginBottom: 5, fontWeight: 'bold' },
   input: {
-    borderWidth: 1, borderColor: '#ccc', borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 6,
     padding: 10,
   },
 });

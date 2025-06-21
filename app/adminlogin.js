@@ -1,7 +1,16 @@
+// Halaman Login Admin
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Alert,
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+
 import { BASE_URL } from '../constants';
 
 export default function AdminLogin() {
@@ -9,6 +18,7 @@ export default function AdminLogin() {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
+  // Fungsi untuk login admin
   const handleLogin = async () => {
     try {
       const res = await fetch(`${BASE_URL}/api/auth/login`, {
@@ -16,6 +26,7 @@ export default function AdminLogin() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
+
       const json = await res.json();
 
       if (!res.ok) {
@@ -23,14 +34,13 @@ export default function AdminLogin() {
         return;
       }
 
+      // Validasi role: hanya admin yang boleh login lewat sini
       if (json.user.role !== 'admin') {
-  Alert.alert("Bukan admin");
-  return;
-}
+        Alert.alert('Akses Ditolak', 'Anda bukan admin');
+        return;
+      }
 
-      router.replace('/login');
-
-
+      // Simpan token & arahkan ke halaman admin
       await AsyncStorage.setItem('token', json.token);
       router.replace('/adminreservasi');
     } catch (err) {
@@ -41,6 +51,7 @@ export default function AdminLogin() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login Admin</Text>
+
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -48,6 +59,7 @@ export default function AdminLogin() {
         onChangeText={setEmail}
         autoCapitalize="none"
       />
+
       <TextInput
         style={styles.input}
         placeholder="Password"
@@ -55,8 +67,11 @@ export default function AdminLogin() {
         onChangeText={setPassword}
         secureTextEntry
       />
+
       <Button title="Login" onPress={handleLogin} />
+
       <View style={styles.spacer} />
+
       <Button title="Kembali" onPress={() => router.back()} />
     </View>
   );

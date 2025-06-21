@@ -1,10 +1,17 @@
+// Pasien: Halaman Riwayat Reservasi
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
-  ActivityIndicator, Alert, FlatList,
-  StyleSheet, Text, TouchableOpacity, View
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+
 import { BASE_URL } from '../constants';
 
 export default function RiwayatScreen() {
@@ -12,6 +19,7 @@ export default function RiwayatScreen() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  // Ambil data reservasi dari backend
   const fetchRiwayat = async () => {
     try {
       const token = await AsyncStorage.getItem('token');

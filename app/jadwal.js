@@ -1,9 +1,15 @@
+// Pasien: Halaman untuk melihat Jadwal Dokter
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
-  ActivityIndicator, FlatList,
-  StyleSheet, Text, TouchableOpacity, View
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+
 import { BASE_URL } from '../constants';
 
 export default function JadwalDokterScreen() {
@@ -11,6 +17,7 @@ export default function JadwalDokterScreen() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  // Ambil data jadwal dokter dari backend
   const fetchJadwal = async () => {
     try {
       const res = await fetch(`${BASE_URL}/api/jadwal`);
@@ -29,12 +36,14 @@ export default function JadwalDokterScreen() {
 
   return (
     <View style={styles.container}>
+      {/* Tombol kembali */}
       <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
         <Text style={styles.backText}>← Kembali</Text>
       </TouchableOpacity>
 
       <Text style={styles.title}>Jadwal Dokter</Text>
 
+      {/* Loading atau tampilkan list */}
       {loading ? (
         <ActivityIndicator size="large" color="#2196f3" />
       ) : (
@@ -56,15 +65,31 @@ export default function JadwalDokterScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: 'white' },
-  backButton: { marginBottom: 10 },
-  backText: { fontSize: 16, color: '#1d4ed8' },
-  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 20 },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: 'white',
+  },
+  backButton: {
+    marginBottom: 10,
+  },
+  backText: {
+    fontSize: 16,
+    color: '#1d4ed8',
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
   card: {
     backgroundColor: '#f0f0f0',
     padding: 15,
     marginBottom: 15,
     borderRadius: 10,
   },
-  nama: { fontSize: 16, fontWeight: 'bold' },
+  nama: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });

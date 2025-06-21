@@ -1,10 +1,17 @@
+// Dokter: Halaman Daftar Reservasi
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
-  ActivityIndicator, Alert, FlatList,
-  StyleSheet, Text, TouchableOpacity, View
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+
 import { BASE_URL } from '../../constants';
 
 export default function DaftarReservasiDokter() {
@@ -12,17 +19,21 @@ export default function DaftarReservasiDokter() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  // Ambil daftar reservasi untuk dokter dari backend
   const fetchReservasi = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
       const res = await fetch(`${BASE_URL}/api/reservasi/dokter`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       const json = await res.json();
+
       if (!res.ok) {
         Alert.alert('Gagal', json.msg || 'Terjadi kesalahan');
         return;
       }
+
       setData(json);
     } catch (err) {
       Alert.alert('Error', 'Gagal mengambil data reservasi');
@@ -31,11 +42,13 @@ export default function DaftarReservasiDokter() {
     }
   };
 
+  // Logout: hapus token dan arahkan ke login
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token');
     router.replace('/login');
   };
 
+  // Ambil data saat komponen dimuat
   useEffect(() => {
     fetchReservasi();
   }, []);
@@ -44,6 +57,7 @@ export default function DaftarReservasiDokter() {
 
   return (
     <View style={{ flex: 1 }}>
+      {/* Header dengan judul dan tombol logout */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Reservasi Dokter</Text>
         <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
@@ -51,6 +65,7 @@ export default function DaftarReservasiDokter() {
         </TouchableOpacity>
       </View>
 
+      {/* List reservasi */}
       <FlatList
         data={data}
         keyExtractor={(item) => item._id}
@@ -58,8 +73,13 @@ export default function DaftarReservasiDokter() {
         ListEmptyComponent={<Text style={styles.empty}>Tidak ada reservasi</Text>}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => router.push({ pathname: '/dokter/pemeriksaan', params: { id: item._id } })}
             style={styles.card}
+            onPress={() =>
+              router.push({
+                pathname: '/dokter/pemeriksaan',
+                params: { id: item._id },
+              })
+            }
           >
             <Text style={styles.title}>{item.namaPasien}</Text>
             <Text>{item.tanggal} - {item.poli}</Text>
@@ -73,13 +93,25 @@ export default function DaftarReservasiDokter() {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 15 },
-  card: {
-    borderWidth: 1, borderColor: '#ccc', padding: 15,
-    marginBottom: 10, borderRadius: 8, backgroundColor: '#f9f9f9',
+  container: {
+    padding: 15,
   },
-  title: { fontWeight: 'bold', fontSize: 16 },
-  empty: { textAlign: 'center', marginTop: 50 },
+  card: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 15,
+    marginBottom: 10,
+    borderRadius: 8,
+    backgroundColor: '#f9f9f9',
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  empty: {
+    textAlign: 'center',
+    marginTop: 50,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -1,12 +1,13 @@
+// auth.js – Route otentikasi (register, login, buat dokter)
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// Middleware to verify JWT token
+// Middleware verifikasi JWT (sebaiknya dipindah ke file terpisah)
 function verifyToken(req, res, next) {
   const token = req.header('x-auth-token');
   if (!token) return res.status(401).json({ msg: 'No token, authorization denied' });
@@ -20,7 +21,9 @@ function verifyToken(req, res, next) {
   }
 }
 
-// ✅ Register
+// ✅ Register akun pasien
+// POST /api/auth/register
+// Body: { name, email, password }
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -28,15 +31,18 @@ router.post('/register', async (req, res) => {
     if (existingUser) return res.status(400).json({ msg: 'Email sudah terdaftar' });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword }); // default role = 'pasien'
+    const user = new User({ name, email, password: hashedPassword }); // default: role = pasien
     await user.save();
+
     res.json({ msg: 'Register berhasil' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// ✅ Login (tanpa pembatasan role)
+// ✅ Login
+// POST /api/auth/login
+// Body: { email, password }
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -60,13 +66,15 @@ router.post('/login', async (req, res) => {
         role: user.role,
       },
     });
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
 // ✅ Buat akun dokter (khusus admin)
+// POST /api/auth/buat-dokter
+// Header: x-auth-token
+// Body: { name, email, password }
 router.post('/buat-dokter', verifyToken, async (req, res) => {
   if (req.user.role !== 'admin') return res.status(403).json({ msg: 'Akses ditolak' });
 

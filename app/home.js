@@ -1,8 +1,10 @@
+// Pasien: Halaman Beranda Setelah Login
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 export default function HomeScreen() {
+  // Logout: hapus token dan kembali ke login
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token');
     router.replace('/login');
@@ -13,22 +15,41 @@ export default function HomeScreen() {
       <Text style={styles.text}>Selamat Datang di RS Mobile App</Text>
 
       <View style={styles.buttonGroup}>
-        <Button title="Lihat Jadwal Dokter" onPress={() => router.push('/jadwal')} />
+        <Button
+          title="Lihat Jadwal Dokter"
+          onPress={() => router.push('/jadwal')}
+        />
         <View style={styles.spacer} />
 
-        <Button title="Reservasi Online" onPress={() => router.push('/reservasi')} />
+        <Button
+          title="Reservasi Online"
+          onPress={() => router.push('/reservasi')}
+        />
         <View style={styles.spacer} />
 
-        <Button title="Riwayat Reservasi" onPress={() => router.push('/riwayatreservasi')} />
+        <Button
+          title="Riwayat Reservasi"
+          onPress={() => router.push('/riwayatreservasi')}
+        />
         <View style={styles.spacer} />
 
-        <Button title="Riwayat Kunjungan" onPress={() => router.push('/riwayatkunjungan')} />
+        <Button
+          title="Riwayat Kunjungan"
+          onPress={() => router.push('/riwayatkunjungan')}
+        />
         <View style={styles.spacer} />
 
-        <Button title="Profil Pengguna" onPress={() => router.push('/profile')} />
+        <Button
+          title="Profil Pengguna"
+          onPress={() => router.push('/profile')}
+        />
         <View style={styles.spacer} />
 
-        <Button title="Logout" onPress={handleLogout} color="red" />
+        <Button
+          title="Logout"
+          onPress={handleLogout}
+          color="red"
+        />
       </View>
     </View>
   );
@@ -36,10 +57,15 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
   text: {
-    fontSize: 20, marginBottom: 30, textAlign: 'center',
+    fontSize: 20,
+    marginBottom: 30,
+    textAlign: 'center',
   },
   buttonGroup: {
     width: '100%',

@@ -1,12 +1,23 @@
+// Dokter: Halaman Pemeriksaan Cepat (semua reservasi)
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
-import { Alert, Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Alert,
+  Button,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+
 import { BASE_URL } from '../constants';
 
 export default function DokterReservasiScreen() {
-  const [data, setData] = useState([]);
-  const [form, setForm] = useState({});
+  const [data, setData] = useState([]); // data reservasi
+  const [form, setForm] = useState({}); // input per reservasi berdasarkan id
 
+  // Ambil data reservasi dari backend
   const fetchReservasi = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
@@ -20,10 +31,11 @@ export default function DokterReservasiScreen() {
     }
   };
 
+  // Kirim hasil pemeriksaan
   const handleSubmit = async (id) => {
     try {
       const token = await AsyncStorage.getItem('token');
-      const res = await fetch(`http://50.50.50.110:5000/api/kunjungan/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/kunjungan/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -32,9 +44,10 @@ export default function DokterReservasiScreen() {
         body: JSON.stringify(form[id]),
       });
       const json = await res.json();
+
       if (res.ok) {
         Alert.alert('Berhasil', 'Data kunjungan disimpan');
-        fetchReservasi();
+        fetchReservasi(); // refresh data setelah simpan
       } else {
         Alert.alert('Gagal', json.msg);
       }
@@ -57,25 +70,47 @@ export default function DokterReservasiScreen() {
           <Text style={styles.title}>{item.namaPasien}</Text>
           <Text>Tanggal: {item.tanggal}</Text>
           <Text>Keluhan: {item.keluhan}</Text>
+
           <TextInput
             placeholder="Diagnosa"
             style={styles.input}
             value={form[item._id]?.diagnosa || ''}
-            onChangeText={(text) => setForm({ ...form, [item._id]: { ...form[item._id], diagnosa: text } })}
+            onChangeText={(text) =>
+              setForm({
+                ...form,
+                [item._id]: { ...form[item._id], diagnosa: text },
+              })
+            }
           />
+
           <TextInput
             placeholder="Tindakan"
             style={styles.input}
             value={form[item._id]?.tindakan || ''}
-            onChangeText={(text) => setForm({ ...form, [item._id]: { ...form[item._id], tindakan: text } })}
+            onChangeText={(text) =>
+              setForm({
+                ...form,
+                [item._id]: { ...form[item._id], tindakan: text },
+              })
+            }
           />
+
           <TextInput
             placeholder="Catatan"
             style={styles.input}
             value={form[item._id]?.catatan || ''}
-            onChangeText={(text) => setForm({ ...form, [item._id]: { ...form[item._id], catatan: text } })}
+            onChangeText={(text) =>
+              setForm({
+                ...form,
+                [item._id]: { ...form[item._id], catatan: text },
+              })
+            }
           />
-          <Button title="Selesai Diperiksa" onPress={() => handleSubmit(item._id)} />
+
+          <Button
+            title="Selesai Diperiksa"
+            onPress={() => handleSubmit(item._id)}
+          />
         </View>
       )}
     />

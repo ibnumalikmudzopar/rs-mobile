@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-// contoh endpoint sementara
+// Placeholder endpoint untuk kunjungan
+// GET /api/kunjungan
 router.get('/', (req, res) => {
   res.json({ msg: 'Ini endpoint kunjungan sementara' });
 });

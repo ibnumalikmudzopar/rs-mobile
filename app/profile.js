@@ -1,7 +1,16 @@
+// Pasien: Halaman Profil Pengguna
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, Button, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Button,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
 import { BASE_URL } from '../constants';
 
 export default function ProfilScreen() {
@@ -9,6 +18,7 @@ export default function ProfilScreen() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  // Ambil data profil dari backend
   const fetchProfil = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
@@ -21,6 +31,7 @@ export default function ProfilScreen() {
         Alert.alert('Gagal', json.msg || 'Terjadi kesalahan');
         return;
       }
+
       setProfil(json);
     } catch (err) {
       Alert.alert('Error', 'Gagal mengambil data profil');
@@ -29,9 +40,10 @@ export default function ProfilScreen() {
     }
   };
 
+  // Logout: hapus token dan kembali ke halaman login
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token');
-    router.replace('/login'); // kembali ke login
+    router.replace('/login');
   };
 
   useEffect(() => {
@@ -47,14 +59,15 @@ export default function ProfilScreen() {
       <Text>Email: {profil.email}</Text>
       <Text>Role: {profil.role}</Text>
 
+      <View style={styles.spacer} />
       <Button title="Edit Profil" onPress={() => router.push('/edit')} />
-        <View style={styles.spacer} />
-        <Button title="Kembali" onPress={() => router.back()} />
-        <View style={styles.spacer} />
-      <Button title="Logout" color="red" onPress={handleLogout} />
-    
+
+      <View style={styles.spacer} />
+      <Button title="Kembali" onPress={() => router.back()} />
+
+      <View style={styles.spacer} />
+      <Button title="Logout" onPress={handleLogout} color="red" />
     </View>
-    
   );
 }
 
@@ -68,6 +81,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   spacer: {
-    height: 12
-  }
+    height: 12,
+  },
 });

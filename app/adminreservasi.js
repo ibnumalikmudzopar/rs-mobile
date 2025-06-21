@@ -1,12 +1,18 @@
+// Admin: Halaman Konfirmasi Reservasi
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
-  ActivityIndicator, Alert, Button, FlatList,
-  StyleSheet, Text,
+  ActivityIndicator,
+  Alert,
+  Button,
+  FlatList,
+  StyleSheet,
+  Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
+
 import { BASE_URL } from '../constants';
 
 export default function AdminReservasiScreen() {
@@ -14,15 +20,21 @@ export default function AdminReservasiScreen() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  // Ambil semua data reservasi (khusus admin)
   const fetchReservasi = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
       const res = await fetch(`${BASE_URL}/api/reservasi/semua`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       const json = await res.json();
-      if (res.ok) setData(json);
-      else Alert.alert('Gagal', json.msg || 'Terjadi kesalahan');
+
+      if (res.ok) {
+        setData(json);
+      } else {
+        Alert.alert('Gagal', json.msg || 'Terjadi kesalahan');
+      }
     } catch (err) {
       Alert.alert('Error', 'Gagal mengambil data');
     } finally {
@@ -30,20 +42,23 @@ export default function AdminReservasiScreen() {
     }
   };
 
+  // Admin menekan tombol konfirmasi
   const handleKonfirmasi = async (id) => {
     try {
       const token = await AsyncStorage.getItem('token');
-      const res = await fetch(`http://50.50.50.110:5000/api/reservasi/konfirmasi/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/reservasi/konfirmasi/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       });
+
       const json = await res.json();
+
       if (res.ok) {
         Alert.alert('Berhasil', 'Reservasi dikonfirmasi');
-        fetchReservasi(); // refresh data
+        fetchReservasi(); // refresh list
       } else {
         Alert.alert('Gagal', json.msg || 'Gagal mengonfirmasi');
       }
@@ -52,6 +67,7 @@ export default function AdminReservasiScreen() {
     }
   };
 
+  // Logout admin
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token');
     router.replace('/login');
@@ -65,6 +81,7 @@ export default function AdminReservasiScreen() {
 
   return (
     <View style={{ flex: 1 }}>
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Reservasi Admin</Text>
         <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
@@ -72,6 +89,7 @@ export default function AdminReservasiScreen() {
         </TouchableOpacity>
       </View>
 
+      {/* List reservasi */}
       <FlatList
         data={data}
         keyExtractor={(item) => item._id}
@@ -82,8 +100,12 @@ export default function AdminReservasiScreen() {
             <Text>Dokter: {item.dokter}</Text>
             <Text>Tanggal: {item.tanggal}</Text>
             <Text>Status: {item.status}</Text>
+
             {item.status === 'Menunggu Konfirmasi' && (
-              <Button title="Konfirmasi" onPress={() => handleKonfirmasi(item._id)} />
+              <Button
+                title="Konfirmasi"
+                onPress={() => handleKonfirmasi(item._id)}
+              />
             )}
           </View>
         )}

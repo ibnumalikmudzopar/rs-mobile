@@ -1,3 +1,4 @@
+// Pasien: Halaman Form Reservasi Online
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -7,8 +8,10 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput
+  TextInput,
+  View,
 } from 'react-native';
+
 import { BASE_URL } from '../constants';
 
 const ReservasiScreen = () => {
@@ -17,6 +20,7 @@ const ReservasiScreen = () => {
   const [tanggal, setTanggal] = useState('');
   const [keluhan, setKeluhan] = useState('');
 
+  // Kirim data reservasi ke backend
   const handleReservasi = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
@@ -38,7 +42,8 @@ const ReservasiScreen = () => {
       }
 
       Alert.alert('Sukses', 'Reservasi berhasil!');
-      // Reset form jika perlu
+      
+      // Kosongkan form
       setPoli('');
       setDokter('');
       setTanggal('');
@@ -59,18 +64,21 @@ const ReservasiScreen = () => {
         value={poli}
         onChangeText={setPoli}
       />
+
       <TextInput
         style={styles.input}
         placeholder="Nama Dokter"
         value={dokter}
         onChangeText={setDokter}
       />
+
       <TextInput
         style={styles.input}
         placeholder="Tanggal (YYYY-MM-DD)"
         value={tanggal}
         onChangeText={setTanggal}
       />
+
       <TextInput
         style={styles.input}
         placeholder="Keluhan"
@@ -79,8 +87,8 @@ const ReservasiScreen = () => {
         multiline
       />
 
-       
       <Button title="Kirim Reservasi" onPress={handleReservasi} />
+      <View style={styles.spacer} />
       <Button title="Kembali" onPress={() => router.back()} />
     </ScrollView>
   );
@@ -110,5 +118,5 @@ const styles = StyleSheet.create({
   },
   spacer: {
     height: 12,
-  }
+  },
 });
