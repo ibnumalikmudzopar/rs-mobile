@@ -1,50 +1,110 @@
-# Welcome to your Expo app 👋
+# 🏥 Aplikasi Mobile Rumah Sakit
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Sistem reservasi, pemeriksaan, dan manajemen pasien berbasis mobile..
 
-## Get started
+## 🚀 Fitur Utama
 
-1. Install dependencies
+### 👨‍⚕️ Pasien
+- Register & Login (JWT)
+- Melakukan reservasi online
+- Melihat riwayat reservasi dan hasil pemeriksaan
 
-   ```bash
-   npm install
-   ```
+### 🧑‍💼 Admin
+- Melihat semua reservasi
+- Mengonfirmasi reservasi
 
-2. Start the app
+### 🩺 Dokter
+- Melihat daftar reservasi yang dikonfirmasi
+- Mengisi hasil pemeriksaan pasien
+- Simpan ke riwayat kunjungan
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## ⚙️ Teknologi yang Digunakan
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+| Kategori    | Teknologi                      |
+|-------------|--------------------------------|
+| Frontend    | React Native (Expo + Router)   |
+| Backend     | Express.js + Node.js           |
+| Database    | MongoDB + Mongoose             |
+| Autentikasi | JWT + bcrypt                   |
+| Penyimpanan | AsyncStorage (React Native)    |
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 📂 Struktur Folder
 
-When you're ready, run:
+rs-mobile/
+│
+├── backend/
+│ ├── models/
+│ ├── routes/
+│ ├── middleware/
+│ ├── server.js
+│ └── .env
+│
+├── app/ (Front end)
+|   ├── login.js
+│   └── ...
+├── constants.js
+├── ....
 
+
+
+---
+
+## 🔐 Middleware
+- `verifyToken`: Autentikasi user via token
+- `verifyAdmin`: Hanya untuk role admin
+- `verifyDokter`: Hanya untuk role dokter
+
+---
+
+## 📄 API Endpoint (Contoh)
+
+| Endpoint                      | Method | Role     | Keterangan                    |
+|------------------------------|--------|----------|-------------------------------|
+| `/api/auth/register`         | POST   | umum     | Register akun pasien          |
+| `/api/auth/login`            | POST   | umum     | Login (JWT)                   |
+| `/api/reservasi`             | POST   | pasien   | Buat reservasi baru           |
+| `/api/reservasi/:id`         | PUT    | admin    | Konfirmasi reservasi          |
+| `/api/riwayatkunjungan/:id`  | POST   | dokter   | Simpan hasil pemeriksaan      |
+| `/api/profile`               | GET    | semua    | Ambil data user login         |
+
+---
+
+## 🛠 Cara Menjalankan
+
+### Backend
 ```bash
-npm run reset-project
-```
+cd app/backend
+node serve
+FrontEnd
+cd rs-mobile
+npx expo start
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Fitur yang Sudah Diimplementasikan
+ Autentikasi JWT
 
-## Learn more
+ Role-based access
 
-To learn more about developing your project with Expo, look at the following resources:
+ Reservasi pasien
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+ Konfirmasi admin
 
-## Join the community
+ Pemeriksaan dokter
 
-Join our community of developers creating universal apps.
+ Riwayat reservasi & kunjungan
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+Rencana Pengembangan
+Upload file rekam medis
+
+Notifikasi
+
+Export PDF hasil pemeriksaan
+
+Dashboard statistik admin
+
+👤 Dibuat oleh jimmywilbur
+akun 
