@@ -103,10 +103,19 @@ npx expo start
 
 - [x] Autentikasi JWT
 - [x] Role-based Access Control (RBAC)
-- [x] Reservasi Pasien
+- [x] Reservasi Online
 - [x] Konfirmasi Admin
 - [x] Pemeriksaan oleh Dokter
 - [x] Riwayat Reservasi & Kunjungan
+- [x] Jadwal Dokter
+- [x] Manajemen Profil
+- [x] Notifikasi Push
+- [x] Riwayat Kunjungan
+- [x] Riwayat Pemeriksaan
+- [x] Riwayat Reservasi
+- [x] Notifikasi Push
+- [x] Notifikasi Push
+
 
 ---
 
