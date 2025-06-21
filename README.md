@@ -83,14 +83,14 @@ rs-mobile/
 
 ### Backend (Express.js)
 ```bash
-cd backend
+cd rs-mobile/backend
 npm install
 node server.js
 ```
 
 ### Frontend (React Native + Expo)
 ```bash
-cd frontend
+cd rs-mobile
 npm install
 npx expo start
 ```
