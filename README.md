@@ -1,6 +1,8 @@
 # 🏥 Aplikasi Mobile Rumah Sakit
 
-Sistem reservasi, pemeriksaan, dan manajemen pasien berbasis mobile..
+Sistem reservasi, pemeriksaan, dan manajemen pasien berbasis mobile. Mendukung tiga role utama: pasien, admin, dan dokter.
+
+---
 
 ## 🚀 Fitur Utama
 
@@ -16,7 +18,7 @@ Sistem reservasi, pemeriksaan, dan manajemen pasien berbasis mobile..
 ### 🩺 Dokter
 - Melihat daftar reservasi yang dikonfirmasi
 - Mengisi hasil pemeriksaan pasien
-- Simpan ke riwayat kunjungan
+- Menyimpan hasil ke riwayat kunjungan
 
 ---
 
@@ -34,77 +36,91 @@ Sistem reservasi, pemeriksaan, dan manajemen pasien berbasis mobile..
 
 ## 📂 Struktur Folder
 
+```
 rs-mobile/
 │
 ├── backend/
-│ ├── models/
-│ ├── routes/
-│ ├── middleware/
-│ ├── server.js
-│ └── .env
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── server.js
+│   └── .env
 │
-├── app/ (Front end)
-|   ├── login.js
+├── app/              # Frontend (React Native)
+│   ├── login.js
+│   ├── register.js
+│   ├── reservasi.js
 │   └── ...
+│
 ├── constants.js
-├── ....
-
-
+└── ...
+```
 
 ---
 
 ## 🔐 Middleware
-- `verifyToken`: Autentikasi user via token
-- `verifyAdmin`: Hanya untuk role admin
-- `verifyDokter`: Hanya untuk role dokter
+
+- `verifyToken` – Autentikasi JWT untuk semua user
+- `verifyAdmin` – Validasi role admin
+- `verifyDokter` – Validasi role dokter
 
 ---
 
-## 📄 API Endpoint (Contoh)
+## 📄 Contoh API Endpoint
 
 | Endpoint                      | Method | Role     | Keterangan                    |
 |------------------------------|--------|----------|-------------------------------|
 | `/api/auth/register`         | POST   | umum     | Register akun pasien          |
-| `/api/auth/login`            | POST   | umum     | Login (JWT)                   |
+| `/api/auth/login`            | POST   | umum     | Login menggunakan JWT         |
 | `/api/reservasi`             | POST   | pasien   | Buat reservasi baru           |
 | `/api/reservasi/:id`         | PUT    | admin    | Konfirmasi reservasi          |
 | `/api/riwayatkunjungan/:id`  | POST   | dokter   | Simpan hasil pemeriksaan      |
-| `/api/profile`               | GET    | semua    | Ambil data user login         |
+| `/api/profile`               | GET    | semua    | Ambil data user yang login    |
 
 ---
 
-## 🛠 Cara Menjalankan
+## 🛠 Cara Menjalankan Proyek
 
-### Backend
+### Backend (Express.js)
 ```bash
-cd app/backend
-node serve
-FrontEnd
-cd rs-mobile
+cd backend
+npm install
+node server.js
+```
+
+### Frontend (React Native + Expo)
+```bash
+cd frontend
+npm install
 npx expo start
+```
 
-Fitur yang Sudah Diimplementasikan
- Autentikasi JWT
+> Pastikan file `.env` pada backend sudah dikonfigurasi dengan benar dan IP `BASE_URL` di `constants.js` disesuaikan.
 
- Role-based access
+---
 
- Reservasi pasien
+## ✅ Fitur yang Sudah Diimplementasikan
 
- Konfirmasi admin
+- [x] Autentikasi JWT
+- [x] Role-based Access Control (RBAC)
+- [x] Reservasi Pasien
+- [x] Konfirmasi Admin
+- [x] Pemeriksaan oleh Dokter
+- [x] Riwayat Reservasi & Kunjungan
 
- Pemeriksaan dokter
+---
 
- Riwayat reservasi & kunjungan
+## 📦 Rencana Pengembangan
 
+- Upload file rekam medis
+- Notifikasi ke pasien/dokter
+- Export PDF hasil pemeriksaan
+- Dashboard statistik admin
 
-Rencana Pengembangan
-Upload file rekam medis
+---
 
-Notifikasi
+## 👤 Dibuat oleh
 
-Export PDF hasil pemeriksaan
-
-Dashboard statistik admin
-
-👤 Dibuat oleh jimmywilbur
-akun 
+Jimmy Wilbur  
+🧑‍💻 Mobile Developer – React Native  
+📅 Juni 2025
